@@ -9,6 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/mooware/jollyview</PackageProjectUrl>
     <Description>Clipboard Image Viewer, originally made for Games2Jolly flash escape games</Description>
+    <ApplicationIcon>jolly.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

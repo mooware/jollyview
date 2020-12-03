@@ -218,7 +218,7 @@ Double-click right to hide an image.";
                 m_imageForm = new ImageForm();
 
             m_imageForm.SetImage(image);
-            m_imageForm.Show();
+            m_imageForm.Show(this);
             m_imageForm.BringToFront();
         }
 

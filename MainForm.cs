@@ -72,6 +72,7 @@ namespace jollyview
             // register for clipboard change notifications
             AddClipboardFormatListener(Handle);
             m_clipboardSequence = GetClipboardSequenceNumber();
+            timerImageGrab.Tick += timerImageGrab_Tick;
         }
 
         private void ShowAboutDialog()
@@ -149,31 +150,41 @@ Double-click right to hide an image.";
                     return;
                 m_clipboardCooldownTimer.Restart();
 
-                // I got a COM exception that the image format is unknown,
-                // and I don't think that could possibly be my mistake,
-                // so I guess we'll just retry
-                const int MAX_TRIES = 3;
-                int tries = MAX_TRIES;
-                while (tries-- > 0)
-                {
-                    try
-                    {
-                        var image = Clipboard.GetImage();
-                        if (image != null)
-                        {
-                            AddImage(image);
-                            break;
-                        }
-                    }
-                    catch (COMException)
-                    {
-                        // ignore
-                    }
-                }
+                // sometimes the screenshot comes out part or all black,
+                // but it's still fine in the Win+V window.
+                // maybe we're too quick to grab it, wait a bit.
+                timerImageGrab.Start();
             }
 
             // always pass to base class handler
             base.WndProc(ref m);
+        }
+
+        private void timerImageGrab_Tick(object? sender, EventArgs e)
+        {
+            timerImageGrab.Stop(); // timer is one-shot, should not trigger continuously
+
+            // I got a COM exception that the image format is unknown,
+            // and I don't think that could possibly be my mistake,
+            // so I guess we'll just retry
+            const int MAX_TRIES = 3;
+            int tries = MAX_TRIES;
+            while (tries-- > 0)
+            {
+                try
+                {
+                    var image = Clipboard.GetImage();
+                    if (image != null)
+                    {
+                        AddImage(image);
+                        break;
+                    }
+                }
+                catch (COMException)
+                {
+                    // ignore
+                }
+            }
         }
 
         private void AddImage(Image image)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.flowLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -43,6 +44,7 @@
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.trackBarZoom = new System.Windows.Forms.TrackBar();
             this.labelZoom = new System.Windows.Forms.Label();
+            this.timerImageGrab = new System.Windows.Forms.Timer(this.components);
             this.flowLayout.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
@@ -198,6 +200,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TrackBar trackBarZoom;
         private System.Windows.Forms.Label labelZoom;
+        private System.Windows.Forms.Timer timerImageGrab;
     }
 }
 

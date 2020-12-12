@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/mooware/jollyview</PackageProjectUrl>
     <Description>Clipboard Image Viewer, originally made for Games2Jolly flash escape games</Description>
     <ApplicationIcon>jolly.ico</ApplicationIcon>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

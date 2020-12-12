@@ -57,7 +57,7 @@ namespace jollyview
             m_zoomLevels = smallRange.Concat(largeRange).ToArray();
             trackBarZoom.Maximum = m_zoomLevels.Length - 1;
             // default should be 100%
-            trackBarZoom.Value = smallRange.Count();
+            trackBarZoom.Value = smallRange.Count() - 1;
 
             UpdateZoomLevel(); // just to set the text label
             trackBarZoom.MouseWheel += trackBarZoom_MouseWheel;

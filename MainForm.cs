@@ -15,6 +15,8 @@ namespace jollyview
         [DllImport("user32.dll")]
         private static extern uint GetClipboardSequenceNumber();
 
+        private const int ZOOM_FACTOR_PERCENT_STEP = 50;
+
         // color and line width for highlighting
         private static readonly Color HIGHLIGHT_COLOR = Color.LightGreen;
         const int HIGHLIGHT_WIDTH = 3;
@@ -45,6 +47,9 @@ namespace jollyview
         public MainForm()
         {
             InitializeComponent();
+
+            UpdateZoomLevel(); // just to set the text label
+            trackBarZoom.MouseWheel += trackBarZoom_MouseWheel;
 
             // didn't find any way to add menu handlers in the designer UI
             menuItemExit.Click += (sender, e) => Close();
@@ -99,6 +104,9 @@ Double-click right to hide an image.";
                 WindowState = FormWindowState.Maximized;
             else if (prop.Minimized)
                 WindowState = FormWindowState.Minimized;
+
+            if (prop.Zoom >= trackBarZoom.Minimum && prop.Zoom <= trackBarZoom.Maximum)
+                trackBarZoom.Value = prop.Zoom;
         }
 
         private void StoreSettings()
@@ -108,6 +116,7 @@ Double-click right to hide an image.";
             prop.Size = (WindowState == FormWindowState.Normal ? Size : RestoreBounds.Size);
             prop.Maximized = (WindowState == FormWindowState.Maximized);
             prop.Minimized = (WindowState == FormWindowState.Minimized);
+            prop.Zoom = trackBarZoom.Value;
 
             prop.Save();
         }
@@ -228,22 +237,52 @@ Double-click right to hide an image.";
             if (layout is null)
                 return;
 
+            var zoom = (ZOOM_FACTOR_PERCENT_STEP * trackBarZoom.Value) / 100.0;
+
             foreach (var control in flowLayout.Controls)
             {
                 var img = control as PictureBox;
                 if (img is null || img.Image is null)
                     continue;
 
+                var ratio = ((double)img.Image.Height) / img.Image.Width;
+                var zoomedImgWidth = (int)(img.Image.Width * zoom);
+
                 // can't figure out the full width I can use, reduce by a few %
                 var layoutWidth = (int)(layout.ClientSize.Width * 0.96);
                 // I want maximum width. can't the layout engine do this for me?
-                var newMaxWidth = Math.Min(img.Image.Width, layoutWidth);
-                var ratio = ((double)img.Image.Height) / img.Image.Width;
+                var newMaxWidth = Math.Min(zoomedImgWidth, layoutWidth);
                 var scaledHeight = (int)(newMaxWidth * ratio);
 
                 img.MinimumSize = img.MaximumSize = new Size(newMaxWidth, scaledHeight);
                 img.SizeMode = PictureBoxSizeMode.Zoom;
             }
+        }
+
+        /// <summary>
+        /// Custom mouse wheel handler, because I only want to move a single step per event
+        /// </summary>
+        private void trackBarZoom_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e is HandledMouseEventArgs he)
+                he.Handled = true;
+
+            if (e.Delta > 0 && trackBarZoom.Value < trackBarZoom.Maximum)
+                trackBarZoom.Value += 1;
+            else if (e.Delta < 0 && trackBarZoom.Value > trackBarZoom.Minimum)
+                trackBarZoom.Value -= 1;
+        }
+
+        private void trackBarZoom_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateZoomLevel();
+        }
+
+        private void UpdateZoomLevel()
+        {
+            var zoom = ZOOM_FACTOR_PERCENT_STEP * trackBarZoom.Value;
+            labelZoom.Text = $"{zoom}%";
+            flowLayout.PerformLayout();
         }
     }
 }

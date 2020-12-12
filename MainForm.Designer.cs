@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.flowLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuItemActions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,19 +41,33 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.trackBarZoom = new System.Windows.Forms.TrackBar();
+            this.labelZoom = new System.Windows.Forms.Label();
+            this.flowLayout.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayout
             // 
+            this.flowLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayout.AutoScroll = true;
             this.flowLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayout.Location = new System.Drawing.Point(0, 24);
+            this.flowLayout.Controls.Add(this.flowLayoutPanel1);
+            this.flowLayout.Location = new System.Drawing.Point(0, 70);
             this.flowLayout.Name = "flowLayout";
-            this.flowLayout.Size = new System.Drawing.Size(484, 537);
+            this.flowLayout.Size = new System.Drawing.Size(484, 468);
             this.flowLayout.TabIndex = 0;
             this.flowLayout.Layout += new System.Windows.Forms.LayoutEventHandler(this.flowLayout_Layout);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(8, 8);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // menuStrip
             // 
@@ -125,9 +140,35 @@
             this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
             this.menuItemAbout.Text = "About";
             // 
+            // trackBarZoom
+            // 
+            this.trackBarZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarZoom.LargeChange = 1;
+            this.trackBarZoom.Location = new System.Drawing.Point(0, 24);
+            this.trackBarZoom.Maximum = 20;
+            this.trackBarZoom.Minimum = 2;
+            this.trackBarZoom.Name = "trackBarZoom";
+            this.trackBarZoom.Size = new System.Drawing.Size(425, 45);
+            this.trackBarZoom.TabIndex = 2;
+            this.trackBarZoom.Value = 2;
+            this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarZoom_ValueChanged);
+            // 
+            // labelZoom
+            // 
+            this.labelZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelZoom.AutoSize = true;
+            this.labelZoom.Location = new System.Drawing.Point(431, 40);
+            this.labelZoom.Name = "labelZoom";
+            this.labelZoom.Size = new System.Drawing.Size(41, 15);
+            this.labelZoom.TabIndex = 3;
+            this.labelZoom.Text = "9999%";
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(484, 561);
+            this.ClientSize = new System.Drawing.Size(484, 538);
+            this.Controls.Add(this.labelZoom);
+            this.Controls.Add(this.trackBarZoom);
             this.Controls.Add(this.flowLayout);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -136,8 +177,10 @@
             this.Text = "JollyView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.flowLayout.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,6 +198,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemExit;
         private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TrackBar trackBarZoom;
+        private System.Windows.Forms.Label labelZoom;
     }
 }
 

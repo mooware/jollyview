@@ -15,8 +15,6 @@ namespace jollyview
         [DllImport("user32.dll")]
         private static extern uint GetClipboardSequenceNumber();
 
-        private const int ZOOM_FACTOR_PERCENT_STEP = 50;
-
         // color and line width for highlighting
         private static readonly Color HIGHLIGHT_COLOR = Color.LightGreen;
         const int HIGHLIGHT_WIDTH = 3;
@@ -44,9 +42,22 @@ namespace jollyview
         /// </summary>
         private ImageForm? m_imageForm = null;
 
+        /// <summary>
+        /// Zoom levels in percent, indexed by the slider value
+        /// </summary>
+        private readonly int[] m_zoomLevels;
+
         public MainForm()
         {
             InitializeComponent();
+
+            // supported zoom levels: 10% - 100% in 10% steps, 100% - 1000% in 100% steps
+            var smallRange = Enumerable.Range(1, 10).Select(i => i * 10);
+            var largeRange = Enumerable.Range(2, 9).Select(i => i * 100);
+            m_zoomLevels = smallRange.Concat(largeRange).ToArray();
+            trackBarZoom.Maximum = m_zoomLevels.Length - 1;
+            // default should be 100%
+            trackBarZoom.Value = smallRange.Count();
 
             UpdateZoomLevel(); // just to set the text label
             trackBarZoom.MouseWheel += trackBarZoom_MouseWheel;
@@ -237,7 +248,7 @@ Double-click right to hide an image.";
             if (layout is null)
                 return;
 
-            var zoom = (ZOOM_FACTOR_PERCENT_STEP * trackBarZoom.Value) / 100.0;
+            var zoom = m_zoomLevels[trackBarZoom.Value] / 100.0;
 
             foreach (var control in flowLayout.Controls)
             {
@@ -247,6 +258,9 @@ Double-click right to hide an image.";
 
                 var ratio = ((double)img.Image.Height) / img.Image.Width;
                 var zoomedImgWidth = (int)(img.Image.Width * zoom);
+
+                const int MIN_IMG_WIDTH = 10;
+                zoomedImgWidth = Math.Max(zoomedImgWidth, MIN_IMG_WIDTH);
 
                 // can't figure out the full width I can use, reduce by a few %
                 var layoutWidth = (int)(layout.ClientSize.Width * 0.96);
@@ -280,7 +294,7 @@ Double-click right to hide an image.";
 
         private void UpdateZoomLevel()
         {
-            var zoom = ZOOM_FACTOR_PERCENT_STEP * trackBarZoom.Value;
+            var zoom = m_zoomLevels[trackBarZoom.Value];
             labelZoom.Text = $"{zoom}%";
             flowLayout.PerformLayout();
         }

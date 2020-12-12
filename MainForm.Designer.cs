@@ -146,19 +146,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarZoom.LargeChange = 1;
             this.trackBarZoom.Location = new System.Drawing.Point(0, 24);
-            this.trackBarZoom.Maximum = 20;
-            this.trackBarZoom.Minimum = 2;
             this.trackBarZoom.Name = "trackBarZoom";
-            this.trackBarZoom.Size = new System.Drawing.Size(425, 45);
+            this.trackBarZoom.Size = new System.Drawing.Size(428, 45);
             this.trackBarZoom.TabIndex = 2;
-            this.trackBarZoom.Value = 2;
             this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarZoom_ValueChanged);
             // 
             // labelZoom
             // 
             this.labelZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelZoom.AutoSize = true;
-            this.labelZoom.Location = new System.Drawing.Point(431, 40);
+            this.labelZoom.Location = new System.Drawing.Point(434, 38);
             this.labelZoom.Name = "labelZoom";
             this.labelZoom.Size = new System.Drawing.Size(41, 15);
             this.labelZoom.TabIndex = 3;

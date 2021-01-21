@@ -45,6 +45,7 @@
             this.trackBarZoom = new System.Windows.Forms.TrackBar();
             this.labelZoom = new System.Windows.Forms.Label();
             this.timerImageGrab = new System.Windows.Forms.Timer(this.components);
+            this.menuItemSave = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayout.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
@@ -88,6 +89,7 @@
             this.menuItemHide,
             this.menuItemSeparator1,
             this.menuItemRemove,
+            this.menuItemSave,
             this.menuItemSeparator2,
             this.menuItemExit});
             this.menuItemActions.Name = "menuItemActions";
@@ -163,6 +165,12 @@
             this.labelZoom.TabIndex = 3;
             this.labelZoom.Text = "9999%";
             // 
+            // menuItemSave
+            // 
+            this.menuItemSave.Name = "menuItemSave";
+            this.menuItemSave.Size = new System.Drawing.Size(134, 22);
+            this.menuItemSave.Text = "Save All...";
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(484, 538);
@@ -201,6 +209,7 @@
         private System.Windows.Forms.TrackBar trackBarZoom;
         private System.Windows.Forms.Label labelZoom;
         private System.Windows.Forms.Timer timerImageGrab;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSave;
     }
 }
 

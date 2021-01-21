@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace jollyview
 {
@@ -67,6 +69,7 @@ namespace jollyview
             menuItemShow.Click += (sender, e) => ChangeAllImageVisibility(true);
             menuItemHide.Click += (sender, e) => ChangeAllImageVisibility(false);
             menuItemRemove.Click += (sender, e) => flowLayout.Controls.Clear();
+            menuItemSave.Click += (sender, e) => SaveAllImages();
             menuItemAbout.Click += (sender, e) => ShowAboutDialog();
 
             // register for clipboard change notifications
@@ -92,6 +95,38 @@ Double-click right to hide an image.";
         {
             foreach (var ctrl in flowLayout.Controls.OfType<Control>())
                 ctrl.Visible = visible;
+        }
+
+        private void SaveAllImages()
+        {
+            var openDirDialog = new FolderBrowserDialog();
+            openDirDialog.Description = "Select folder to store images in";
+            openDirDialog.ShowNewFolderButton = true;
+
+            var result = openDirDialog.ShowDialog(this);
+            if (result != DialogResult.OK)
+                return;
+
+            var path = openDirDialog.SelectedPath;
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+            int counter = 1;
+
+            foreach (var ctrl in flowLayout.Controls.OfType<PictureBox>())
+            {
+                var filename = Path.Combine(path, $"{timestamp}_img{counter}.png");
+                counter++;
+
+                try
+                {
+                    using var fileStream = new FileStream(filename, FileMode.OpenOrCreate);
+                    var img = ctrl.Image;
+                    img.Save(fileStream, ImageFormat.Png);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(this, filename + ": " + e.Message, "Failed to save file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)

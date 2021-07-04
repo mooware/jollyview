@@ -1,6 +1,6 @@
 # JollyView
 
-JollyView is a screenshot snippet manager, meant to help manage screenshots of hints and solutions when playing Flash escape games.
+JollyView is a screenshot snippet manager, meant to help manage screenshots of hints and solutions when playing Flash escape games. It automatically picks up images that are copied into the Windows clipboard and displays them.
 
 ## Instructions
 

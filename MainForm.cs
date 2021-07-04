@@ -83,7 +83,7 @@ namespace jollyview
             const string description = @"JollyView, a clipboard image viewer
 
 Built for screenshot snippet management for flash escape games of questionable quality.
-Made by mooware (dev@mooware.at), 2020.
+Made by mooware (dev@mooware.at), 2021.
 
 Double-click left to open an image full-sized.
 Double-click right to hide an image.";
@@ -108,7 +108,7 @@ Double-click right to hide an image.";
                 return;
 
             var path = openDirDialog.SelectedPath;
-            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             int counter = 1;
 
             foreach (var ctrl in flowLayout.Controls.OfType<PictureBox>())
